@@ -1,17 +1,19 @@
 package com.figure.store.domain.service.product;
 
 import com.figure.store.domain.exception.DomainException;
+import com.figure.store.domain.exception.EntityNotFoundException;
 import com.figure.store.domain.model.product.Manufacturer;
 import com.figure.store.domain.repository.product.ManufacturerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Collection;
 import java.util.Optional;
 
 @Service
 public class ManufacturerService {
 
-    private ManufacturerRepository manufacturerRepository;
+    private final ManufacturerRepository manufacturerRepository;
 
     @Autowired
     public ManufacturerService(ManufacturerRepository manufacturerRepository) {
@@ -20,14 +22,28 @@ public class ManufacturerService {
 
     public Manufacturer save(Manufacturer manufacturer) {
         String manufacturerName = manufacturer.getName();
-        Optional<Manufacturer> existingManufacturer = manufacturerRepository.existsByName(manufacturerName);
+        Optional<Manufacturer> optionalManufacturer = manufacturerRepository.existsByName(manufacturerName);
 
-        if(existingManufacturer.isPresent() && !existingManufacturer.get().equals(manufacturer)) {
-            throw new DomainException("Já existe um fabricante cadastrado com esse nome.");
+        if(optionalManufacturer.isPresent()) {
+            throw new DomainException("Já existe um fabricante cadastrado com esse nome");
         }
 
-        Manufacturer savedManufacturer = manufacturerRepository.save(manufacturer);
+        return manufacturerRepository.save(manufacturer);
+    }
 
-        return savedManufacturer;
+    public Collection<Manufacturer> findAll() {
+        return manufacturerRepository.findAll();
+    }
+
+    public Manufacturer findById(Long id) {
+        Optional<Manufacturer> optionalManufacturer = manufacturerRepository.findById(id);
+
+        if(!optionalManufacturer.isPresent()) {
+            throw new EntityNotFoundException("Fabricante não encontrado");
+        }
+
+        Manufacturer foundManufacturer = optionalManufacturer.get();
+
+        return foundManufacturer;
     }
 }

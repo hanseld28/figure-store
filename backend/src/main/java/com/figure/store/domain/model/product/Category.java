@@ -19,6 +19,7 @@ import javax.validation.constraints.NotNull;
 public class Category {
 
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "ctg_id")
 	private Long id;
 

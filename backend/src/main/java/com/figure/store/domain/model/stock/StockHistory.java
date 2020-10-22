@@ -21,6 +21,7 @@ import java.time.OffsetDateTime;
 public class StockHistory {
 
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "sth_id")
 	private Long id;
 

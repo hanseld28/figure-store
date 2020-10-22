@@ -19,6 +19,7 @@ import java.util.Collection;
 public class ActionFigure {
 
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "acf_id")
 	private Long id;
 

@@ -19,6 +19,7 @@ import javax.validation.constraints.NotNull;
 public class Manufacturer {
 
 	@Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "mft_id")
 	private Long id;
 

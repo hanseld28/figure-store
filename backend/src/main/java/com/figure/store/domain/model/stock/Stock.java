@@ -19,6 +19,7 @@ import javax.persistence.*;
 public class Stock {
 
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "stc_id")
 	private Long id;
 

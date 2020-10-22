@@ -3,18 +3,18 @@ package com.figure.store.api.controller;
 import com.figure.store.domain.model.product.Manufacturer;
 import com.figure.store.domain.service.product.ManufacturerService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.Collection;
 
 @RestController
 @RequestMapping(path = "/manufacturers")
 public class ManufacturerController {
 
-    private ManufacturerService manufacturerService;
+    private final ManufacturerService manufacturerService;
 
     @Autowired
     public ManufacturerController(ManufacturerService manufacturerService) {
@@ -22,7 +22,21 @@ public class ManufacturerController {
     }
 
     @PostMapping
-    public Manufacturer save(@Valid @RequestBody Manufacturer manufacturer) {
-        return manufacturerService.save(manufacturer);
+    @ResponseStatus(HttpStatus.CREATED)
+    public ResponseEntity<Manufacturer> save(@Valid @RequestBody Manufacturer manufacturer) {
+        Manufacturer savedManufacturer = manufacturerService.save(manufacturer);
+        return ResponseEntity.ok(savedManufacturer);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Manufacturer> findById(@PathVariable Long id) {
+        Manufacturer manufacturer = manufacturerService.findById(id);
+        return ResponseEntity.ok(manufacturer);
+    }
+
+    @GetMapping
+    public ResponseEntity<Collection<Manufacturer>> findAll() {
+        Collection<Manufacturer> manufacturers = manufacturerService.findAll();
+        return ResponseEntity.ok(manufacturers);
     }
 }
