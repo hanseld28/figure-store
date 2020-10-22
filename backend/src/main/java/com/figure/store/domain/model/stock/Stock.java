@@ -6,9 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -17,14 +15,20 @@ import javax.persistence.OneToOne;
 @Setter
 
 @Entity
+@Table(name = "stock")
 public class Stock {
 
 	@Id
+	@Column(name = "stc_id")
 	private Long id;
 
+	@Column(name = "stc_amount")
 	private Integer amount;
 
-	@OneToOne
+	@OneToOne(orphanRemoval = true, fetch = FetchType.EAGER, optional = false)
+	@JoinColumn(
+			name = "stc_acf_id",
+			referencedColumnName = "acf_id")
 	private ActionFigure actionFigure;
 
 }

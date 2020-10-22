@@ -5,8 +5,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -15,11 +15,16 @@ import javax.persistence.Id;
 @Setter
 
 @Entity
+@Table(name = "manufacturers")
 public class Manufacturer {
 
 	@Id
+	@Column(name = "mft_id")
 	private Long id;
 
+	@Basic
+	@NotNull
+	@Column(name = "mft_name")
 	private String name;
 
 }

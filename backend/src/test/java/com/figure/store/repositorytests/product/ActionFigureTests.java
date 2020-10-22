@@ -22,6 +22,9 @@ public class ActionFigureTests {
     @Rule
     public ExpectedException thrown= ExpectedException.none();
 
+
+
+
     @Test
     public void SaveTest() {
         ActionFigure actionFigure=generateActionFigure();

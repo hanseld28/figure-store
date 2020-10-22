@@ -4,10 +4,10 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.data.annotation.CreatedDate;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.time.OffsetDateTime;
 
 @AllArgsConstructor
@@ -17,14 +17,23 @@ import java.time.OffsetDateTime;
 @Setter
 
 @Entity
+@Table(name = "stock_history")
 public class StockHistory {
 
 	@Id
+	@Column(name = "sth_id")
 	private Long id;
 
-	private OffsetDateTime date;
+	@Basic
+	@Column(name = "sth_amount")
+	private Integer amount;
 
-	@OneToOne
+	@CreatedDate
+	@Column(name = "sth_date")
+	private LocalDateTime date;
+
+	@OneToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "sth_stc_id", referencedColumnName = "stc_id")
 	private Stock stock;
 
 }
