@@ -8,6 +8,7 @@
           <b-nav-item to="/">Painel</b-nav-item>
           <b-nav-item to="/products">Action Figure</b-nav-item>
           <b-nav-item to="/stock">Estoque</b-nav-item>
+          <b-nav-item to="/manufacturers">Fabricante</b-nav-item>
         </b-navbar-nav>
       </b-collapse>
     </b-navbar>
