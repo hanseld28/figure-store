@@ -5,6 +5,7 @@ import com.figure.store.domain.exception.EntityNotFoundException;
 import com.figure.store.domain.model.product.Category;
 import com.figure.store.domain.repository.product.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
@@ -12,6 +13,7 @@ import java.util.Optional;
 /**
  * author LucasDonizeti
  */
+@Service
 public class CategoryService {
     private CategoryRepository categoryRepository;
 
@@ -21,11 +23,11 @@ public class CategoryService {
     }
 
     public Category save(Category category) {
-        Optional<Category> existCategory = categoryRepository.existsByName(category.getName());
+        Boolean categoryAlreadyExists = categoryRepository.existsByName(category.getName());
 
-        if (existCategory.isPresent())
+        if (categoryAlreadyExists) {
             throw new DomainException("Já existe uma categoria cadastrada com esse nome.");
-
+        }
         return categoryRepository.save(category);
     }
 
@@ -34,8 +36,9 @@ public class CategoryService {
     }
 
     public Category findById(Long id) {
-        if (!categoryRepository.findById(id).isPresent())
+        if (!categoryRepository.findById(id).isPresent()) {
             throw new EntityNotFoundException("Categoria não encontrada");
+        }
         return categoryRepository.findById(id).get();
     }
 

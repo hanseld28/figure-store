@@ -21,11 +21,13 @@ public class ManufacturerService {
     }
 
     public Manufacturer save(Manufacturer manufacturer) {
-        String manufacturerName = manufacturer.getName();
-        Optional<Manufacturer> optionalManufacturer = manufacturerRepository.existsByName(manufacturerName);
+        if (manufacturer.getId() != null) {
+            String manufacturerName = manufacturer.getName();
+            boolean manufacturerAlreadyExists = manufacturerRepository.existsByName(manufacturerName);
 
-        if(optionalManufacturer.isPresent()) {
-            throw new DomainException("Já existe um fabricante cadastrado com esse nome");
+            if (manufacturerAlreadyExists) {
+                throw new DomainException("Já existe um fabricante cadastrado com esse nome");
+            }
         }
 
         return manufacturerRepository.save(manufacturer);
@@ -39,11 +41,21 @@ public class ManufacturerService {
         Optional<Manufacturer> optionalManufacturer = manufacturerRepository.findById(id);
 
         if(!optionalManufacturer.isPresent()) {
-            throw new EntityNotFoundException("Fabricante não encontrado");
+            throwEntityNotFoundException();
         }
 
-        Manufacturer foundManufacturer = optionalManufacturer.get();
+        return optionalManufacturer.get();
+    }
 
-        return foundManufacturer;
+    public void removeById(Long id) {
+        if (!manufacturerRepository.existsById(id)) {
+            throwEntityNotFoundException();
+        }
+
+        manufacturerRepository.deleteById(id);
+    }
+
+    private void throwEntityNotFoundException() {
+        throw new EntityNotFoundException("Fabricante não encontrado");
     }
 }

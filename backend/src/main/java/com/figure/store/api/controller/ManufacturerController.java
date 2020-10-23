@@ -39,4 +39,17 @@ public class ManufacturerController {
         Collection<Manufacturer> manufacturers = manufacturerService.findAll();
         return ResponseEntity.ok(manufacturers);
     }
+
+    @PutMapping("/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public ResponseEntity<Manufacturer> update(@Valid @RequestBody Manufacturer manufacturerToUpdate) {
+        Manufacturer manufacturerUpdated = manufacturerService.save(manufacturerToUpdate);
+        return ResponseEntity.ok(manufacturerUpdated);
+    }
+
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public void delete(@PathVariable Long id) {
+        manufacturerService.removeById(id);
+    }
 }
