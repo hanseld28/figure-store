@@ -38,9 +38,9 @@ public class MaterialService {
 	
 	public List<Material> listAll(){
 		
-		List<Material> Allmaterials = materialRepository.findAll();
+		List<Material> allMaterials = materialRepository.findAll();
 		
-		return Allmaterials;
+		return allMaterials;
 	}
 
 	public Boolean exists(Material material){

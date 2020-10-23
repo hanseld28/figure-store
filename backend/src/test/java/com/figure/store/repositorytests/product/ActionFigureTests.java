@@ -82,8 +82,6 @@ public class ActionFigureTests {
         actionFigure.setLongDescription("the best action figure ever!");
         actionFigure.setApproximateHeight(1);
         actionFigure.setRecommendedAge(18);
-        actionFigure.setMale(true);
-        actionFigure.setFullAngleImage(false);
         return actionFigure;
     }
 }

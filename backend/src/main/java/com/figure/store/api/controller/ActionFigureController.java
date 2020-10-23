@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.swing.*;
 import javax.validation.Valid;
 
 /**
@@ -14,7 +15,7 @@ import javax.validation.Valid;
  */
 
 @RestController
-@RequestMapping("/action_figures")
+@RequestMapping("/action-figures")
 public class ActionFigureController {
 
     private ActionFigureService actionFigureService;
@@ -36,6 +37,7 @@ public class ActionFigureController {
 
     @PostMapping
     public ResponseEntity<?> save(@Valid @RequestBody ActionFigure actionFigure){
+        System.out.println(actionFigure.getName());
         return new ResponseEntity<>(actionFigureService.save(actionFigure), HttpStatus.OK);
     }
 

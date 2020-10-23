@@ -14,7 +14,9 @@ import org.springframework.web.bind.annotation.RestController;
 import com.figure.store.domain.model.product.Material;
 import com.figure.store.domain.service.product.MaterialService;
 
-
+/**
+ * author Gabriel Victor
+ */
 
 @RestController
 @RequestMapping(path = "/materials")

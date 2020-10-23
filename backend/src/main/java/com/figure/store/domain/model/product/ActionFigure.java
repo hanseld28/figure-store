@@ -1,11 +1,13 @@
 package com.figure.store.domain.model.product;
 
+import com.figure.store.domain.exception.DomainException;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.BitSet;
 import java.util.Collection;
 
 @AllArgsConstructor
@@ -51,14 +53,6 @@ public class ActionFigure {
 	@Column(name = "acf_recommended_age")
 	private Integer recommendedAge;
 
-	@Basic
-	@Column(name = "acf_male")
-	private Boolean male;
-
-	@Basic
-	@Column(name = "acf_full_angle_image")
-	private Boolean fullAngleImage;
-
 	@OneToMany
 	@JoinTable(name = "action_figures_categories",
 			joinColumns = @JoinColumn(name = "afc_acf_id"),
@@ -76,5 +70,4 @@ public class ActionFigure {
 			joinColumns = @JoinColumn(name = "afm_acf_id"),
 			inverseJoinColumns = @JoinColumn(name = "afm_mtr_id"))
 	private Collection<Material> materials;
-
 }
