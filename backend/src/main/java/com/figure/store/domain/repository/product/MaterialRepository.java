@@ -10,5 +10,5 @@ import java.util.Optional;
 
 @Repository
 public interface MaterialRepository extends JpaRepository<Material, Long> {
-    Optional<Material> existsByName(String name);
+    Boolean existsByName(String name);
 }

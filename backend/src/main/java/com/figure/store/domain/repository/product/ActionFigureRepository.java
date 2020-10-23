@@ -6,5 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface ActionFigureRepository extends JpaRepository<ActionFigure, Long> {
-
+    Boolean existsByName(String name);
 }

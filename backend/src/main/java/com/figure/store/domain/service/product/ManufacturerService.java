@@ -2,6 +2,7 @@ package com.figure.store.domain.service.product;
 
 import com.figure.store.domain.exception.DomainException;
 import com.figure.store.domain.exception.EntityNotFoundException;
+import com.figure.store.domain.model.product.Category;
 import com.figure.store.domain.model.product.Manufacturer;
 import com.figure.store.domain.repository.product.ManufacturerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,6 +54,10 @@ public class ManufacturerService {
         }
 
         manufacturerRepository.deleteById(id);
+    }
+
+    public Boolean exists(Manufacturer manufacturer){
+        return manufacturerRepository.existsById(manufacturer.getId());
     }
 
     private void throwEntityNotFoundException() {

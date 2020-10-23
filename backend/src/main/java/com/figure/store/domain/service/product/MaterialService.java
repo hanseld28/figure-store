@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import javax.validation.Valid;
 
+import com.figure.store.domain.model.product.Category;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -25,10 +26,8 @@ public class MaterialService {
 	}
 	
 	public Material save(Material material){
-		
-		Optional<Material> existingMaterial = materialRepository.existsByName(material.getName());
-		
-		if(existingMaterial.isPresent() && !existingMaterial.get().equals(material)){
+
+		if(materialRepository.existsByName(material.getName())){
 			throw new DomainException("Material já existente cadastrado");
 		}
 		
@@ -42,6 +41,10 @@ public class MaterialService {
 		List<Material> Allmaterials = materialRepository.findAll();
 		
 		return Allmaterials;
+	}
+
+	public Boolean exists(Material material){
+		return materialRepository.existsById(material.getId());
 	}
 	
 	

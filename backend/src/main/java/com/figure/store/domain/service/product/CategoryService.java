@@ -52,4 +52,7 @@ public class CategoryService {
         return categoryRepository.save(category);
     }
 
+    public Boolean exists(Category category){
+        return categoryRepository.existsById(category.getId());
+    }
 }
