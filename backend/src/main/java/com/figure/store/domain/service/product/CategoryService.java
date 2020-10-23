@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 /**
  * author LucasDonizeti
@@ -25,9 +24,9 @@ public class CategoryService {
     public Category save(Category category) {
         Boolean categoryAlreadyExists = categoryRepository.existsByName(category.getName());
 
-        if (categoryAlreadyExists) {
+        if (categoryAlreadyExists)
             throw new DomainException("Já existe uma categoria cadastrada com esse nome.");
-        }
+
         return categoryRepository.save(category);
     }
 
@@ -36,10 +35,21 @@ public class CategoryService {
     }
 
     public Category findById(Long id) {
-        if (!categoryRepository.findById(id).isPresent()) {
+        if (!categoryRepository.findById(id).isPresent())
             throw new EntityNotFoundException("Categoria não encontrada");
-        }
         return categoryRepository.findById(id).get();
+    }
+
+    public void removeById(Long id) {
+        if (!categoryRepository.findById(id).isPresent())
+            throw new EntityNotFoundException("Categoria não encontrada");
+        categoryRepository.delete(categoryRepository.findById(id).get());
+    }
+
+    public Category updateCategory(Category category) {
+        if (!categoryRepository.findById(category.getId()).isPresent())
+            throw new EntityNotFoundException("Categoria não encontrada");
+        return categoryRepository.save(category);
     }
 
 }
