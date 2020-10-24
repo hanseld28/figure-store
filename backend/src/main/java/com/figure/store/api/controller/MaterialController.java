@@ -5,11 +5,9 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import com.figure.store.domain.model.product.Material;
 import com.figure.store.domain.service.product.MaterialService;
@@ -21,23 +19,46 @@ import com.figure.store.domain.service.product.MaterialService;
 @RestController
 @RequestMapping(path = "/materials")
 public class MaterialController {
-	
+
 	private MaterialService materialService;
-	
+
 	@Autowired
 	public MaterialController(MaterialService materialService){
 		this.materialService = materialService;
 	}
-	
+
 	@PostMapping
+	@ResponseStatus(HttpStatus.CREATED)
 	public Material save(@Valid @RequestBody Material material){
 		return materialService.save(material);
 	}
-	
+
 	@GetMapping
+	@ResponseStatus(HttpStatus.OK)
 	public List<Material> listAll(){
-		
+
 		return materialService.listAll();
-		
+
+	}
+
+	@GetMapping("/{id}")
+	@ResponseStatus(HttpStatus.OK)
+	public ResponseEntity<?> listById(@PathVariable("id") Long id){
+
+		return new ResponseEntity<>(materialService.listById(id), HttpStatus.OK);
+	}
+
+
+	@DeleteMapping("/{id}")
+	@ResponseStatus(HttpStatus.OK)
+	public void delete(@PathVariable Long id) {
+		materialService.removeById(id);
+	}
+
+	@PutMapping
+	@ResponseStatus(HttpStatus.OK)
+	public ResponseEntity<?> updateMaterial(@Valid @RequestBody Material material) {
+
+		return new ResponseEntity<>(materialService.updateMaterials(material),HttpStatus.OK);
 	}
 }

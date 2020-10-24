@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import javax.validation.Valid;
 
+import com.figure.store.domain.exception.EntityNotFoundException;
 import com.figure.store.domain.model.product.Category;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,35 +18,56 @@ import com.figure.store.domain.repository.product.MaterialRepository;
 
 @Service
 public class MaterialService {
-	
+
 	private MaterialRepository materialRepository;
-	
+
 	@Autowired
 	public MaterialService(MaterialRepository materialRepository){
 		this.materialRepository = materialRepository;
 	}
-	
+
 	public Material save(Material material){
 
-		if(materialRepository.existsByName(material.getName())){
+		boolean existingMaterial = materialRepository.existsByName(material.getName());
+
+		if(existingMaterial){
 			throw new DomainException("Material já existente cadastrado");
 		}
-		
-		Material savedMaterial = materialRepository.save(material);
-		
-		return savedMaterial;
+
+		return materialRepository.save(material);
 	}
-	
+
 	public List<Material> listAll(){
-		
-		List<Material> allMaterials = materialRepository.findAll();
-		
-		return allMaterials;
+
+		return materialRepository.findAll();
+	}
+
+	public Material listById(Long id){
+
+		if(!materialRepository.findById(id).isPresent())
+			throw new EntityNotFoundException("Material não existe");
+
+		return materialRepository.findById(id).get();
+
+	}
+
+	public void removeById(Long id){
+
+		if(!materialRepository.findById(id).isPresent())
+			throw new EntityNotFoundException("Material não existe");
+
+		materialRepository.delete(materialRepository.findById(id).get());
+	}
+
+	public Material updateMaterials(Material material){
+
+		if(!materialRepository.findById(material.getId()).isPresent())
+			throw new EntityNotFoundException("Material não existe");
+
+		return materialRepository.save(material);
 	}
 
 	public Boolean exists(Material material){
 		return materialRepository.existsById(material.getId());
 	}
-	
-	
 }
