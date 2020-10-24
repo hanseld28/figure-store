@@ -5,6 +5,7 @@ import com.figure.store.domain.exception.EntityNotFoundException;
 import com.figure.store.domain.model.product.Category;
 import com.figure.store.domain.repository.product.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -41,9 +42,14 @@ public class CategoryService {
     }
 
     public void removeById(Long id) {
-        if (!categoryRepository.findById(id).isPresent())
+        if (!categoryRepository.existsById(id))
             throw new EntityNotFoundException("Categoria não encontrada");
-        categoryRepository.delete(categoryRepository.findById(id).get());
+
+        try{
+            categoryRepository.delete(categoryRepository.findById(id).get());
+        }catch (DataIntegrityViolationException e) {
+            throw new DomainException("Categoria não pode ser deletada");
+        }
     }
 
     public Category updateCategory(Category category) {

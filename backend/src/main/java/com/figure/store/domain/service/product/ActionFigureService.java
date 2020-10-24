@@ -89,4 +89,8 @@ public class ActionFigureService {
         return actionFigureRepository.save(actionFigure);
     }
 
+    public List<ActionFigure> findByCategoryId(long categoryId){
+        return actionFigureRepository.findByCategoriesId(categoryId);
+    }
+
 }
