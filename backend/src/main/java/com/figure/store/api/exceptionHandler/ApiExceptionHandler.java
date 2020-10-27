@@ -1,5 +1,6 @@
 package com.figure.store.api.exceptionHandler;
 
+import com.figure.store.domain.exception.ConstraintViolationException;
 import com.figure.store.domain.exception.DomainException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
@@ -49,6 +50,14 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
         OffsetDateTime datetimeNow = OffsetDateTime.now();
 
         Issue issue = createNoFieldsIssue(status.value(), message, datetimeNow);
+
+        return handleExceptionInternal(ex, issue, new HttpHeaders(), status, request);
+    }
+
+    @ExceptionHandler(ConstraintViolationException.class)
+    public ResponseEntity<Object> handleConstraintViolationException(ConstraintViolationException ex, WebRequest request){
+        HttpStatus status=HttpStatus.METHOD_NOT_ALLOWED;
+        Issue issue = createNoFieldsIssue(status.value(), ex.getMessage(), OffsetDateTime.now());
 
         return handleExceptionInternal(ex, issue, new HttpHeaders(), status, request);
     }

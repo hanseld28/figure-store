@@ -1,5 +1,6 @@
 package com.figure.store.domain.service.product;
 
+import com.figure.store.domain.exception.ConstraintViolationException;
 import com.figure.store.domain.exception.DomainException;
 import com.figure.store.domain.exception.EntityNotFoundException;
 import com.figure.store.domain.model.product.Category;
@@ -44,11 +45,10 @@ public class CategoryService {
     public void removeById(Long id) {
         if (!categoryRepository.existsById(id))
             throw new EntityNotFoundException("Categoria não encontrada");
-
         try{
             categoryRepository.delete(categoryRepository.findById(id).get());
         }catch (DataIntegrityViolationException e) {
-            throw new DomainException("Categoria não pode ser deletada");
+            throw new ConstraintViolationException("Categoria "+ id + "não pode ser deletada");
         }
     }
 
