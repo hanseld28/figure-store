@@ -1,5 +1,6 @@
 package com.figure.store.api.controller;
 
+import com.figure.store.domain.service.stock.StockHistoryService;
 import com.figure.store.domain.service.stock.StockService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,20 +17,22 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping(path ="/stock-history")
 public class StockHistoryController {
-    private StockService stockService;
+    private StockHistoryService stockHistoryService;
+
+    public StockHistoryController(StockHistoryService stockHistoryService) {
+        this.stockHistoryService = stockHistoryService;
+    }
 
     @Autowired
-    public StockHistoryController(StockService stockService) {
-        this.stockService = stockService;
-    }
+
 
     @GetMapping
     public ResponseEntity<?> getStockHistory(){
-        return new ResponseEntity<>(stockService.findAll(), HttpStatus.OK);
+        return new ResponseEntity<>(stockHistoryService.findAll(), HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<?> getStockById(@PathVariable long id){
-        return new ResponseEntity<>(stockService.findById(id), HttpStatus.OK);
+        return new ResponseEntity<>(stockHistoryService, HttpStatus.OK);
     }
 }
