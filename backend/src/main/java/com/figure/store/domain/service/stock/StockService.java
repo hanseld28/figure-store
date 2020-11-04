@@ -1,6 +1,7 @@
 package com.figure.store.domain.service.stock;
 
 import com.figure.store.domain.exception.EntityNotFoundException;
+import com.figure.store.domain.model.stock.StockHistory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,11 +14,13 @@ import java.util.Collection;
 @Service
 public class StockService {
 	
-	private StockRepository stockRepository; 
-	
+	private StockRepository stockRepository;
+	private StockHistoryService stockHistoryService;
+
 	@Autowired
-	public StockService(StockRepository stockRepository){
+	public StockService(StockRepository stockRepository, StockHistoryService stockHistoryService) {
 		this.stockRepository = stockRepository;
+		this.stockHistoryService = stockHistoryService;
 	}
 
 	public Collection<Stock> findAll() {
@@ -36,18 +39,32 @@ public class StockService {
 		if(existingStock){
 			throw new DomainException("Produto já existente no stock");
 		}
-		return stockRepository.save(stock);
+
+		Stock stockSaved = stockRepository.save(stock);
+		stockHistoryRegister(stockSaved);
+
+		return stockSaved;
 	}
 	
 	public Stock updateStock(Stock stock){
 		checkIfIdNotExists(stock.getId());
 
-		return stockRepository.save(stock);
+		Stock stockSaved = stockRepository.save(stock);
+		stockHistoryRegister(stockSaved);
+
+		return stockSaved;
 	}
 
 	private void checkIfIdNotExists(Long id) {
 		if (!stockRepository.existsById(id)) {
 			throw new EntityNotFoundException("Estoque não encontrado");
 		}
+	}
+
+	private void stockHistoryRegister(Stock stock){
+		StockHistory stockHistory=new StockHistory();
+		stockHistory.setStock(stock);
+		stockHistory.setAmount(stock.getAmount());
+		stockHistoryService.save(stockHistory);
 	}
 }
