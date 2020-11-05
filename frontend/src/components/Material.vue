@@ -1,6 +1,6 @@
 <template>
   <div class="container-fluid mt-4">
-    <h1 class="h1">Fabricantes</h1>
+    <h1 class="h1">Materiais</h1>
     <b-alert :show="loading" variant="info">Carregando...</b-alert>
     <b-row>
       <b-col>
@@ -13,19 +13,19 @@
             </tr>
           </thead>
           <tbody>
-            <tr v-for="manufacturer in manufacturers" :key="manufacturer.id">
-              <td>{{ manufacturer.id }}</td>
-              <td>{{ manufacturer.name }}</td>
+            <tr v-for="material in materials" :key="material.id">
+              <td>{{ material.id }}</td>
+              <td>{{ material.name }}</td>
               <td class="text-right">
-                <a href="#" @click.prevent="fill(manufacturer)">Editar</a> -
-                <a href="#" @click.prevent="remove(manufacturer.id)">Remover</a>
+                <a href="#" @click.prevent="fill(material)">Editar</a> -
+                <a href="#" @click.prevent="remove(material.id)">Remover</a>
               </td>
             </tr>
           </tbody>
         </table>
       </b-col>
       <b-col lg="3">
-        <b-card :title="(model.id ? 'Editar Fabricante ID#' + model.id : 'Novo Fabricante')">
+        <b-card :title="(model.id ? 'Editar Material ID#' + model.id : 'Novo Material')">
           <form @submit.prevent="create">
             <b-form-group label="Nome">
               <b-form-input type="text" v-model="model.name"></b-form-input>
@@ -41,12 +41,12 @@
 </template>
 
 <script>
-import service from '@/api/manufacturer/service'
+import service from '@/api/material/service'
 export default {
   data () {
     return {
       loading: false,
-      manufacturers: [],
+      materials: [],
       model: {}
     }
   },
@@ -56,11 +56,11 @@ export default {
   methods: {
     async refresh () {
       this.loading = true
-      this.manufacturers = await service.findAll()
+      this.materials = await service.findAll()
       this.loading = false
     },
-    async fill (manufacturer) {
-      this.model = Object.assign({}, manufacturer)
+    async fill (material) {
+      this.model = Object.assign({}, material)
     },
     async create () {
       if (this.model.id) {
@@ -72,7 +72,7 @@ export default {
       await this.refresh()
     },
     async remove (id) {
-      if (confirm('Tem certeza que deseja excluir esse Fabricante?')) {
+      if (confirm('Tem certeza que deseja excluir essa Material?')) {
         if (this.model.id === id) {
           this.model = {}
         }

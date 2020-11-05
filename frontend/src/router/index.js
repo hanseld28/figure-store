@@ -3,6 +3,8 @@ import Router from 'vue-router'
 import Dashboard from '@/components/Dashboard'
 import ActionFigure from '@/components/ActionFigure'
 import Manufacturer from '@/components/Manufacturer'
+import Category from '@/components/Category'
+import Material from '@/components/Material'
 
 Vue.use(Router)
 
@@ -23,6 +25,16 @@ export default new Router({
       path: '/manufacturers',
       name: 'Manufacturer',
       component: Manufacturer
+    },
+    {
+      path: '/categories',
+      name: 'Category',
+      component: Category
+    },
+    {
+      path: '/materials',
+      name: 'Material',
+      component: Material
     }
   ]
 })

@@ -17,18 +17,18 @@ export default {
     })
   },
   findAll () {
-    return this.execute('GET', '/manufacturers')
+    return this.execute('GET', '/categories')
   },
   findById (id) {
-    return this.execute('GET', `/manufacturers/${id}`)
+    return this.execute('GET', `/categories/${id}`)
   },
   save (data) {
-    return this.execute('POST', '/manufacturers', data)
+    return this.execute('POST', '/categories', data)
   },
   update (id, data) {
-    return this.execute('PUT', `/manufacturers/${id}`, data)
+    return this.execute('PUT', `/categories/${id}`, data)
   },
   delete (id) {
-    return this.execute('DELETE', `/manufacturers/${id}`)
+    return this.execute('DELETE', `/categories/${id}`)
   }
 }
