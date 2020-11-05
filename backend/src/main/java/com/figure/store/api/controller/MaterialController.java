@@ -48,14 +48,13 @@ public class MaterialController {
 		return new ResponseEntity<>(materialService.listById(id), HttpStatus.OK);
 	}
 
-
 	@DeleteMapping("/{id}")
 	@ResponseStatus(HttpStatus.OK)
 	public void delete(@PathVariable Long id) {
 		materialService.removeById(id);
 	}
 
-	@PutMapping
+	@PutMapping("/{id}")
 	@ResponseStatus(HttpStatus.OK)
 	public ResponseEntity<?> updateMaterial(@Valid @RequestBody Material material) {
 

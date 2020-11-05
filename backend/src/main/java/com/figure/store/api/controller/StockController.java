@@ -18,7 +18,6 @@ public class StockController {
 
 	@Autowired
 	public StockController(StockService stockService){
-
 		this.stockService = stockService;
 	}
 
@@ -28,7 +27,7 @@ public class StockController {
 		return stockService.save(stock);
 	}
 
-	@PutMapping
+	@PutMapping("/{id}")
 	public ResponseEntity<?> updateStock(@Valid @RequestBody Stock stock){
 		return new ResponseEntity<>(stockService.updateStock(stock),HttpStatus.OK);
 	}

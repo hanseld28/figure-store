@@ -43,7 +43,7 @@ public class CategoryController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @PutMapping
+    @PutMapping("/{id}")
     public ResponseEntity<?> putById(@Valid @RequestBody Category category){
         return new ResponseEntity<>(categoryService.updateCategory(category), HttpStatus.OK);
     }

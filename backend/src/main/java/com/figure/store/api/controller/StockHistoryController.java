@@ -19,12 +19,10 @@ import org.springframework.web.bind.annotation.RestController;
 public class StockHistoryController {
     private StockHistoryService stockHistoryService;
 
+    @Autowired
     public StockHistoryController(StockHistoryService stockHistoryService) {
         this.stockHistoryService = stockHistoryService;
     }
-
-    @Autowired
-
 
     @GetMapping
     public ResponseEntity<?> getStockHistory(){
