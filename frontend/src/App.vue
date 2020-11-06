@@ -7,7 +7,8 @@
         <b-navbar-nav>
           <b-nav-item to="/">Painel</b-nav-item>
           <b-nav-item to="/products">Action Figure</b-nav-item>
-          <b-nav-item to="/stock">Estoque</b-nav-item>
+          <b-nav-item to="/stocks">Estoque</b-nav-item>
+          <b-nav-item to="/stock-histories">Histórico do Estoque</b-nav-item>
           <b-nav-item to="/manufacturers">Fabricantes</b-nav-item>
           <b-nav-item to="/categories">Categorias</b-nav-item>
           <b-nav-item to="/materials">Materiais</b-nav-item>

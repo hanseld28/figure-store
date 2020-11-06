@@ -15,7 +15,8 @@ import javax.validation.Valid;
 @RestController
 @RequestMapping("/categories")
 public class CategoryController {
-    CategoryService categoryService;
+
+    private final CategoryService categoryService;
 
     @Autowired
     private CategoryController(CategoryService categoryService) {

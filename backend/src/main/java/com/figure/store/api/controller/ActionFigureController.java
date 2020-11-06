@@ -17,10 +17,10 @@ import javax.validation.Valid;
 @RequestMapping("/action-figures")
 public class ActionFigureController {
 
-    private ActionFigureService actionFigureService;
+    private final ActionFigureService actionFigureService;
 
     @Autowired
-    ActionFigureController(ActionFigureService actionFigureService){
+    public ActionFigureController(ActionFigureService actionFigureService){
         this.actionFigureService=actionFigureService;
     }
 

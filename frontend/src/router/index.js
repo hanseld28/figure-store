@@ -1,6 +1,8 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Dashboard from '@/components/Dashboard'
+import Stock from '@/components/Stock'
+import StockHistory from '@/components/StockHistory'
 import ActionFigure from '@/components/ActionFigure'
 import Manufacturer from '@/components/Manufacturer'
 import Category from '@/components/Category'
@@ -15,6 +17,16 @@ export default new Router({
       path: '/',
       name: 'Dashboard',
       component: Dashboard
+    },
+    {
+      path: '/stocks',
+      name: 'Stock',
+      component: Stock
+    },
+    {
+      path: '/stock-histories',
+      name: 'StockHistory',
+      component: StockHistory
     },
     {
       path: '/products',

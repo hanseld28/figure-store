@@ -20,7 +20,7 @@ import com.figure.store.domain.service.product.MaterialService;
 @RequestMapping(path = "/materials")
 public class MaterialController {
 
-	private MaterialService materialService;
+	private final MaterialService materialService;
 
 	@Autowired
 	public MaterialController(MaterialService materialService){
@@ -36,15 +36,12 @@ public class MaterialController {
 	@GetMapping
 	@ResponseStatus(HttpStatus.OK)
 	public List<Material> listAll(){
-
 		return materialService.listAll();
-
 	}
 
 	@GetMapping("/{id}")
 	@ResponseStatus(HttpStatus.OK)
 	public ResponseEntity<?> listById(@PathVariable("id") Long id){
-
 		return new ResponseEntity<>(materialService.listById(id), HttpStatus.OK);
 	}
 
@@ -57,7 +54,6 @@ public class MaterialController {
 	@PutMapping("/{id}")
 	@ResponseStatus(HttpStatus.OK)
 	public ResponseEntity<?> updateMaterial(@Valid @RequestBody Material material) {
-
-		return new ResponseEntity<>(materialService.updateMaterials(material),HttpStatus.OK);
+		return new ResponseEntity<>(materialService.updateMaterials(material), HttpStatus.OK);
 	}
 }

@@ -64,11 +64,11 @@
               ></b-form-select>
             </b-form-group>
             <b-form-group label="Fabricante">
-                  <b-form-select
-                    v-model="select.manufacturer.selected"
-                    :options="select.manufacturer.options"
-                    @change="changeManufacturer($event)"
-                  ></b-form-select>
+              <b-form-select
+                v-model="select.manufacturer.selected"
+                :options="select.manufacturer.options"
+                @change="changeManufacturer($event)"
+              ></b-form-select>
             </b-form-group>
             <b-form-group label="Materiais">
               <b-form-checkbox

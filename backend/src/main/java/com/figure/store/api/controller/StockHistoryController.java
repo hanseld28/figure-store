@@ -14,9 +14,10 @@ import org.springframework.web.bind.annotation.RestController;
  */
 
 @RestController
-@RequestMapping(path ="/stock-history")
+@RequestMapping(path ="/stock-histories")
 public class StockHistoryController {
-    private StockHistoryService stockHistoryService;
+
+    private final StockHistoryService stockHistoryService;
 
     @Autowired
     public StockHistoryController(StockHistoryService stockHistoryService) {

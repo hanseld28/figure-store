@@ -11,10 +11,10 @@ import com.figure.store.domain.model.stock.Stock;
 import com.figure.store.domain.service.stock.StockService;
 
 @RestController
-@RequestMapping(path ="/stock")
+@RequestMapping(path ="/stocks")
 public class StockController {
 
-	private StockService stockService;
+	private final StockService stockService;
 
 	@Autowired
 	public StockController(StockService stockService){
