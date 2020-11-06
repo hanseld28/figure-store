@@ -161,6 +161,10 @@ export default {
     },
     async clear () {
       this.model = {}
+      this.checkbox.material.selected = []
+      this.checkbox.category.selected = []
+      this.select.recommendedAge.selected = null
+      this.select.manufacturer.selected = null
     },
     async create () {
       if (this.model.id) {
