@@ -70,6 +70,15 @@
                     @change="changeManufacturer($event)"
                   ></b-form-select>
             </b-form-group>
+            <b-form-group label="Materiais">
+              <b-form-checkbox
+                v-for="material in checkbox.material.loaded"
+                :key="material.id"
+                v-model="checkbox.material.selected"
+                :id="material.name"
+                :value="material.id"
+              >{{ material.name }} </b-form-checkbox>
+            </b-form-group>
             <b-form-group label="Categorias relacionadas">
               <b-form-checkbox
                 v-for="category in checkbox.category.loaded"
@@ -97,6 +106,7 @@
 <script>
 import actionFigureService from '@/api/action-figure/service'
 import manufacturerService from '@/api/manufacturer/service'
+import materialService from '@/api/material/service'
 import categoryService from '@/api/category/service'
 export default {
   data () {
@@ -105,6 +115,10 @@ export default {
       actionFigures: [],
       checkbox: {
         category: {
+          selected: [],
+          loaded: []
+        },
+        material: {
           selected: [],
           loaded: []
         }
@@ -128,6 +142,7 @@ export default {
   async beforeMount () {
     this._refreshRecommendedAges()
     this._refreshManufacturers()
+    this._refreshMaterials()
     this._refreshCategories()
   },
   methods: {
@@ -138,6 +153,11 @@ export default {
     },
     async fill (actionFigure) {
       this.model = Object.assign({}, actionFigure)
+      const { recommendedAge, manufacturer, materials, categories } = actionFigure
+      this._fromModelToSelected(recommendedAge, 'recommendedAge')
+      this._fromModelToSelected(manufacturer, 'manufacturer')
+      this._fromModelToChecked(materials, 'material')
+      this._fromModelToChecked(categories, 'category')
     },
     async clear () {
       this.model = {}
@@ -146,17 +166,17 @@ export default {
       if (this.model.id) {
         await actionFigureService.update(this.model.id, this.model)
       } else {
+        const materials = await this._convertMaterialsToModel()
         const categories = await this._convertCategoriesToModel()
         this.model = {
           ...this.model,
+          materials,
           categories
         }
         await actionFigureService.save(this.model)
       }
       await this.clear()
       await this.refresh()
-
-      console.log(this.model)
     },
     async remove (id) {
       if (confirm('Tem certeza que deseja excluir esse Action Figure?')) {
@@ -167,7 +187,7 @@ export default {
         await this.refresh()
       }
     },
-    async _refreshRecommendedAges () {
+    _refreshRecommendedAges () {
       const recommendedAges = [5, 8, 12, 15, 18]
       const options = recommendedAges.map(recommendedAge => {
         const option = {
@@ -177,7 +197,6 @@ export default {
         }
         return option
       })
-
       this.select.recommendedAge.options = options
     },
     async _refreshManufacturers () {
@@ -193,17 +212,21 @@ export default {
       })
       this.select.manufacturer.options = options
     },
+    async _refreshMaterials () {
+      const materials = await materialService.findAll()
+      this.checkbox.material.loaded = materials
+    },
     async _refreshCategories () {
       const categories = await categoryService.findAll()
       this.checkbox.category.loaded = categories
     },
-    async changeRecommendedAge (recommendedAge) {
+    changeRecommendedAge (recommendedAge) {
       this.model = {
         ...this.model,
         recommendedAge
       }
     },
-    async changeManufacturer (id) {
+    changeManufacturer (id) {
       this.model = {
         ...this.model,
         manufacturer: {
@@ -211,7 +234,16 @@ export default {
         }
       }
     },
-    async _convertCategoriesToModel () {
+    _convertMaterialsToModel () {
+      return this.checkbox.material.selected
+        .map(materialId => {
+          const material = {
+            id: materialId
+          }
+          return material
+        })
+    },
+    _convertCategoriesToModel () {
       return this.checkbox.category.selected
         .map(categoryId => {
           const category = {
@@ -219,6 +251,15 @@ export default {
           }
           return category
         })
+    },
+    _fromModelToSelected (field, propertyName = 'recommendedAge' | 'manufacturer') {
+      const selected = field.id ? field.id : field
+      this.select[propertyName].selected = selected
+    },
+    _fromModelToChecked (list, propertyName = 'material' | 'category') {
+      const selected = list
+        .map(element => element.id)
+      this.checkbox[propertyName].selected = selected
     }
   }
 }
