@@ -3,10 +3,7 @@ package com.figure.store.domain.service.product;
 import com.figure.store.domain.exception.DomainException;
 import com.figure.store.domain.exception.EntityNotFoundException;
 import com.figure.store.domain.model.product.ActionFigure;
-import com.figure.store.domain.model.product.Category;
-import com.figure.store.domain.model.product.Material;
 import com.figure.store.domain.repository.product.ActionFigureRepository;
-import com.figure.store.domain.repository.product.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,7 +21,8 @@ public class ActionFigureService {
     private ManufacturerService manufacturerService;
 
     @Autowired
-    public ActionFigureService(ActionFigureRepository actionFigureRepository, CategoryService categoryService, MaterialService materialService, ManufacturerService manufacturerService) {
+    public ActionFigureService(ActionFigureRepository actionFigureRepository, CategoryService categoryService,
+                               MaterialService materialService, ManufacturerService manufacturerService) {
         this.actionFigureRepository = actionFigureRepository;
         this.categoryService = categoryService;
         this.materialService = materialService;
