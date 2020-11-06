@@ -47,7 +47,7 @@ public class ActionFigureController {
         actionFigureService.removeById(id);
     }
 
-    @PutMapping
+    @PutMapping("/{id}")
     public ResponseEntity<?> updateActionFigures(@Valid @RequestBody ActionFigure actionFigure) {
         return new ResponseEntity<>(actionFigureService.updateActionFigures(actionFigure),HttpStatus.OK);
     }

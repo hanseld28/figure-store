@@ -59,7 +59,7 @@ public class ActionFigure {
 			inverseJoinColumns = @JoinColumn(name = "afc_ctg_id"))
 	private Collection<Category> categories;
 
-	@OneToOne(orphanRemoval = true)
+	@OneToOne
 	@JoinColumn(
 			name = "acf_mft_id",
 			referencedColumnName = "mft_id")
