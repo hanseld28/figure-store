@@ -1,13 +1,11 @@
 package com.figure.store.domain.model.product;
 
-import com.figure.store.domain.exception.DomainException;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.util.BitSet;
 import java.util.Collection;
 
 @AllArgsConstructor
@@ -19,7 +17,6 @@ import java.util.Collection;
 @Entity
 @Table(name = "action_figures")
 public class ActionFigure {
-
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "acf_id")

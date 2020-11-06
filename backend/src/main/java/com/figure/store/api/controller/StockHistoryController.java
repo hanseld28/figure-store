@@ -1,7 +1,6 @@
 package com.figure.store.api.controller;
 
 import com.figure.store.domain.service.stock.StockHistoryService;
-import com.figure.store.domain.service.stock.StockService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -31,6 +30,6 @@ public class StockHistoryController {
 
     @GetMapping("/{id}")
     public ResponseEntity<?> getStockById(@PathVariable long id){
-        return new ResponseEntity<>(stockHistoryService, HttpStatus.OK);
+        return new ResponseEntity<>(stockHistoryService.findByStockId(id), HttpStatus.OK);
     }
 }
