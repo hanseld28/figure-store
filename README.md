@@ -4,8 +4,8 @@ A simple Web App and a REST API for Stock Control of Action Figures products.
 
 ## Technologies
 
-- Spring Boot (backend API)
-- Vue.js (frontend client)
+- [Spring Boot (backend API)](/backend)
+- [Vue.js (frontend client)](/frontend)
 
 ## Tasks
 
